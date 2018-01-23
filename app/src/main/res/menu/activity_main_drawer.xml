@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_pengguna"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Data Pengguna" />
+        <item
+            android:id="@+id/nav_pelatihan"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Data Pelatihan" />
+        <item
+            android:id="@+id/nav_pengujian"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Data Pengujian" />
+        <item
+            android:id="@+id/nav_lbp"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Data LBP" />
+        <item
+            android:id="@+id/nav_bpnn"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Data BPNN" />
+    </group>
+
+</menu>

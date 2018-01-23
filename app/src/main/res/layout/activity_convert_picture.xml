@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/canvas"
+        android:layout_width="300dp"
+        android:layout_height="211dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+    <ImageView
+        android:id="@+id/canvas_kosong"
+        android:layout_width="300dp"
+        android:layout_height="211dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+      <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+
+        <TableRow
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_resize"
+                android:width="150dp"
+                android:text="Resize" />
+            <Button
+                android:text="Grayscale"
+                android:id="@+id/btn_grayscale"
+                android:width="150dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:gravity="center">
+            <Button
+                android:text="LBP"
+                android:id="@+id/btn_lbp"
+                android:width="150dp"/>
+            <Button
+                android:text="BPNN"
+                android:id="@+id/btn_bpnn"
+                android:width="150dp"/>
+
+        </TableRow>
+    </TableLayout>
+
+
+</LinearLayout>

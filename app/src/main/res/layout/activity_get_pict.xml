@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select or Capture Image" />
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="300dp"
+        android:layout_height="211dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TableRow>
+            <TextView
+                android:text="Width "/>
+            <TextView
+                android:text=": "/>
+
+            <EditText
+                android:id="@+id/et_width"
+                android:selectAllOnFocus="false"
+                android:singleLine="false" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="Height "/>
+            <TextView
+                android:text=": "/>
+            <EditText
+                android:id="@+id/et_height"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="URL "/>
+            <TextView
+                android:text=": "/>
+            <EditText
+                android:id="@+id/et_urlPict"/>
+        </TableRow>
+        <TableRow
+            android:layout_gravity="center"
+            android:gravity="center">
+            <Button
+                android:text="Lanjutkan "
+                android:id="@+id/btn_LPel1"/>
+        </TableRow>
+
+    </TableLayout>
+
+
+    </LinearLayout>

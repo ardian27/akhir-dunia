@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.suska.uin.tif.zorokunti.dificam.AddPengguna">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <TextView
+                    android:text="No. Identitas "/>
+
+                <EditText
+                    android:hint="ktp / sim / kartu pelajar"
+                    android:id="@+id/et_id"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Nama Lengkap"/>
+
+                <EditText
+                    android:hint="nama lengkap anda"
+                    android:id="@+id/et_nama"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Tanggal Lahir"/>
+                <EditText
+                    android:id="@+id/et_tgl_lahir"
+                    android:inputType="date"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Jenis Kelamin"/>
+                <EditText
+                    android:id="@+id/et_jk"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Alamat"/>
+                <EditText
+                    android:id="@+id/et_alamat"
+                    />
+            </TableRow>
+            <TableRow>
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/editText5"
+                    android:layout_alignParentBottom="true"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:text="Simpan"
+                    tools:layout_editor_absoluteY="0dp"
+                    tools:layout_editor_absoluteX="0dp" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kembali"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignRight="@+id/editText5"
+                    android:layout_alignEnd="@+id/editText5"
+                    tools:layout_editor_absoluteY="0dp"
+                    tools:layout_editor_absoluteX="0dp" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
