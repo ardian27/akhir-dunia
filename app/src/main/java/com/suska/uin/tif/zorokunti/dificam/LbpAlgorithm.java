@@ -8,10 +8,6 @@ import java.text.DecimalFormat;
 
 public class LbpAlgorithm {
 
-
-
-
-
     public int [][]resultLBP(int [][] matrix,int width , int height){
 
         int [][] oldMatrix=new int[width+1][height+1];
@@ -185,6 +181,9 @@ public class LbpAlgorithm {
 
         //System.out.println("Matrix Akhir");
         // printMatrix(newMatrix);
+
+
+
         return newMatrix;
     }
 

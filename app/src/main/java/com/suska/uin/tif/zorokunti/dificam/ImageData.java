@@ -14,29 +14,31 @@ public class ImageData {
 
     String imageUrl;
     Bitmap gambar;
+    int width,height;
 
-    int arrayImage[];
+
+    int ar[] ;
+
+    public int setW(int w){
+        width=w;
+        return width;
+    }
+    public int setH(int h){
+        height=h;
+        return height;
+    }
+    public void setArray(int [] array,int widthh,int heightt){
+
+        int ar [] =new int [widthh*heightt];
+    }
+
+    public int []getArrayImage(){
+        return ar;
+    }
+
 
     public  ImageData(){
 
-    }
-
-    public Bitmap setGambar(Bitmap gbr){
-
-        gambar=gbr;
-
-        return gambar;
-    }
-    public void setArrayImage(int array[]){
-
-        arrayImage=array;
-    }
-    public int[] getArrayImage(){
-        return arrayImage;
-    }
-
-    public Bitmap getGambar(){
-        return gambar;
     }
 
     public void saveFileToSDCard(String filename, String content) throws Exception

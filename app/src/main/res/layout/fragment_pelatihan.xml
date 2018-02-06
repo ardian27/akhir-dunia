@@ -33,5 +33,33 @@
             android:gravity="center"
             android:text="Selamat datang di laman pelatihan, mohon pastikan data pengguna objek pelatihan telah terdaftar di data pengguna" />
 
+        <Button
+            android:id="@+id/btn_basicTraining"
+            android:layout_width="400px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?attr/colorAccent"
+            android:text="Basic Training"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_simpleTraining"
+            android:layout_width="400px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?android:attr/textColorLinkInverse"
+            android:text="Simple Training"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+            <Button
+                android:layout_width="400px"
+                android:background="?android:attr/colorPressedHighlight"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_multiTraining"
+                android:text="Multi Training"
+                android:textSize="14sp"
+                android:layout_gravity="center"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

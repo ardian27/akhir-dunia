@@ -6,13 +6,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,12 +25,14 @@ import java.util.Date;
 public class ConvertPictureActivity extends AppCompatActivity {
 
     ImageView canvas , canvasKosong;
-    Button resize , grayscale , lbp , bpnn;
+    Button resize , grayscale , lbp , bpnn,pengguna, histogram;
     SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
     String timeNow = s.format(new Date());
-   // TextView tt;
+    TextView  tv_mean,tv_variance,tv_skewness,tv_kurtosis,tv_entrophy;
     Bitmap newBitmap;
-    //int [][] newMatrix = new int[newBitmap.getWidth()][newBitmap.getHeight()];
+    ProgressBar progressBar;
+    public int treshold;
+    int [] arrayNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +40,29 @@ public class ConvertPictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_convert_picture);
 
 
-        canvas = (ImageView)findViewById(R.id.canvas);
+        progressBar = (ProgressBar)findViewById(R.id.pb);
         canvasKosong = (ImageView)findViewById(R.id.canvas_kosong);
         resize = (Button)findViewById(R.id.btn_resize);
-       // tt = (TextView) findViewById(R.id.txt);
+        tv_mean = (TextView) findViewById(R.id.tv_mean);
+        tv_variance = (TextView) findViewById(R.id.tv_variance);
+        tv_skewness = (TextView) findViewById(R.id.tv_skewness);
+        tv_kurtosis = (TextView) findViewById(R.id.tv_kurtosis);
+        tv_entrophy = (TextView) findViewById(R.id.tv_entrophy);
         grayscale = (Button)findViewById(R.id.btn_grayscale);
         lbp = (Button)findViewById(R.id.btn_lbp);
+        histogram = (Button)findViewById(R.id.btn_histogram);
+        pengguna = (Button)findViewById(R.id.btn_pengguna);
         bpnn = (Button)findViewById(R.id.btn_bpnn);
+
 
         //ImageData b = new ImageData();
         Intent x = getIntent();
-        String uri = x.getStringExtra("url");
+        String uri = x.getStringExtra("url"); 
         Bitmap bt = BitmapFactory.decodeFile(uri);
-        canvas.setImageBitmap(bt);
+        canvasKosong.setImageBitmap(bt);
         setBitmap(bt);
+
+
 
         resize.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +70,7 @@ public class ConvertPictureActivity extends AppCompatActivity {
                 Intent xx = getIntent();
                 String awal = xx.getStringExtra("url");
                 Bitmap btm = BitmapFactory.decodeFile(awal);
-                Bitmap rp = Bitmap.createScaledBitmap(btm , 100 , 100, false);
+                Bitmap rp = Bitmap.createScaledBitmap(btm , 1000 ,1000, false);
                 canvasKosong.setImageBitmap(rp);
 
                 setBitmap(rp);
@@ -66,16 +82,23 @@ public class ConvertPictureActivity extends AppCompatActivity {
 
                 ImageData id = new ImageData();
 
+
+
                 int [] pixels = new int [widthResize*heightResize];
                 rp.getPixels(pixels,0,widthResize,0,0,widthResize,heightResize);
-                //id.setArrayImage(pixels);
 
-
-                try {
+               // int d = (rp.getPixel(8,8));
+                //int r = Color.red(d);
+                //int g = Color.green(d);
+                //int b = Color.blue(d);
+              try {
                     id.saveFileToSDCard("LogDificam.txt", "Rezise Gambar"+awal+" "+timeNow);
                     id.saveFileToSDCard("LogDificam.txt", "Width Awal: "+widthAwal+" Height Awal: "+heightAwal);
                     id.saveFileToSDCard("LogDificam.txt", "Width Resize: "+widthResize+" Height Resize: "+heightResize);
-            } catch (Exception e) {
+                   // id.saveFileToSDCard("LogDificam.txt", "Nilai Red"+r);
+                    //id.saveFileToSDCard("LogDificam.txt", "Nilai Green"+g);
+                    //id.saveFileToSDCard("LogDificam.txt", "Nilai blue"+b);
+              } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
@@ -87,6 +110,7 @@ public class ConvertPictureActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+             //   progressBar.setProgress(0);
                 KonversiGrayscale(newBitmap);
                 canvasKosong.setImageBitmap(newBitmap);
 
@@ -94,15 +118,25 @@ public class ConvertPictureActivity extends AppCompatActivity {
                 int height = newBitmap.getHeight();
                 ImageData id=new ImageData();
 
-                 try {
-                      id.saveFileToSDCard("LogDificam.txt", "Konversi Grayscale"+" "+timeNow);
+       //         int d = newBitmap.getPixel(9,9);
+         //       int r = Color.red(d);
+           //     int g = Color.green(d);
+             //   int b = Color.blue(d);
+               // int dd  = (byte) d;
 
-                } catch (Exception e) {
+                try {
+                      id.saveFileToSDCard("LogDificam.txt", "Konversi Grayscale"+" "+timeNow);
+                   //   id.saveFileToSDCard("LogDificam.txt", "Konversi Grayscale matrix"+" "+timeNow);
+                 //     id.saveFileToSDCard("LogDificam.txt", "nilai r,g,b "+" "+r+","+g+","+b);
+                   //   id.saveFileToSDCard("LogDificam.txt", "nilai gp "+dd);
+
+                  } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
 
+               // progressBar.setProgress(100);
             }
         });
 
@@ -111,16 +145,46 @@ public class ConvertPictureActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               KonversiLBP(newBitmap);
+               Bitmap newB = KonversiLBP(newBitmap);
+               canvasKosong.setImageBitmap(newB);
 
-                ImageData id=new ImageData();
-                try {
-                    //id.saveFileToSDCard("LogDificam.txt", "Konversi Grayscale"+awal+" "+timeNow);
-                    id.saveFileToSDCard("LogDificam.txt", "LBP"+" Width/Height"+newBitmap.getWidth()+"/"+newBitmap.getHeight());
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+
+            }
+        });
+
+        histogram.setOnClickListener(new View.OnClickListener() {
+          //  @SuppressLint("ResourceType")
+            @Override
+            public void onClick(View v) {
+
+                int [] matrixResultLBP = arrayNew;
+
+                ImageData id= new ImageData();
+                int dd = matrixResultLBP[9];
+
+
+
+                AlgoritmaHistogram ah = new AlgoritmaHistogram();
+
+                DecimalFormat df= new DecimalFormat("#.####");
+
+                int ni[] = ah.intensitasKeabuan(matrixResultLBP);
+                double hi[] = ah.nilaiHistogram(ni);
+                double mean  = ah.nilaiMean(hi);
+                double variance = ah.nilaiVariance(ah.nilaiHistogram(ni),mean);
+                double skewness = ah.nilaiSkewness(ah.nilaiHistogram(ni),mean,variance);
+                double kurtosis = ah.nilaiKurtosis(ah.nilaiHistogram(ni),mean,variance);
+                double entrophy = ah.nilaiEntrophy(ah.nilaiHistogram(ni));
+
+
+                tv_mean.setText(":"+mean);
+                tv_variance.setText(":"+variance);
+                tv_skewness.setText(":"+skewness);
+                tv_kurtosis.setText(":"+kurtosis);
+                tv_entrophy.setText(":"+entrophy);
+                //int x = (byte) newBitmap.getPixel(800,800);
+                //teksbutton.setText("Mean = "+mean+" "+"Variance = "+variance+""+"Skewness = "+skewness+" "+"Kurtosis "+kurtosis+" "+"Entrophy = "+entrophy );
+                //teksbutton.setText("Nilai matrix 9 = "+dd);
 
             }
         });
@@ -130,13 +194,22 @@ public class ConvertPictureActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
             }
         });
     }
 
+
+
     public Bitmap setBitmap(Bitmap newbitmap){
 
         newBitmap=newbitmap;
+        return newBitmap;
+    }
+
+    public Bitmap clearBitmap(){
+
+        newBitmap=null;
         return newBitmap;
     }
 
@@ -173,90 +246,71 @@ public class ConvertPictureActivity extends AppCompatActivity {
 
     }
 
+
+
     public Bitmap KonversiLBP(Bitmap btGray) {
 
 
-        Bitmap newLbp=Bitmap.createBitmap(btGray.getWidth(),btGray.getHeight(),btGray.getConfig());
-
+        Bitmap newLbp=Bitmap.createBitmap(btGray.getWidth(),btGray.getHeight(), Bitmap.Config.ALPHA_8 );
         int width = btGray.getWidth();
         int height = btGray.getHeight();
 
-        int matrixGrayPicture[] = new int[width*height];
 
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
 
-                int pixel = btGray.getPixel(x, y);
 
-                int px = Color.red(pixel);
-                //int G = Color.green(pixel);
-                //int B = Color.blue(pixel);
+        int[] pixels = new int[btGray.getWidth()*btGray.getHeight()];
+        int[][] pixels2 = new int[btGray.getWidth()][btGray.getHeight()];
+        int [] matrixGrayPicture = new int[btGray.getWidth()*btGray.getHeight()];
+        int k=0;
+        for (int i = 0; i < btGray.getHeight(); i++)
+        {
+            for (int j = 0; j < btGray.getWidth(); j++)
+            {
+                pixels2[i][j]=(byte)(btGray.getPixel(j, i));
 
-                matrixGrayPicture[x] = px;
+                //pixels[0]=(byte)(btGray.getPixel(999, 999));
+               // pixels[1]=(byte)(btGray.getPixel(1000, 1000));
+
             }
         }
+
+
+
         ImageData id= new ImageData();
+        LbpAlgorithm LBP = new LbpAlgorithm();
+
+        int [][] newMatrix =LBP.resultLBP(pixels2,btGray.getWidth(), btGray.getHeight());
+
+        int newMatrixReborn [] = new int [width*height];
+        int kkk = 0;
+        for (int g=0; g<width; g++){
+            for (int h=0; h<height; h++) {
+                newMatrixReborn[kkk] = (byte) newMatrix[g][h];
+                pixels[kkk]= newMatrix[g][h];
+                kkk++;
+            }
+        }
+
+        setArray(pixels);
+
+        newLbp.setPixels(newMatrixReborn,0,width,0,0,width,height);
+
+
         try {
-            id.saveFileToSDCard("LogDificam.txt", "LBP"+" matrix gray 1 = "+matrixGrayPicture[1]);
-            id.saveFileToSDCard("LogDificam.txt", "LBP"+" Panjang matrix Gray"+matrixGrayPicture.length);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
 
-        LbpAlgorithm LBP = new LbpAlgorithm();
-
-        int widthheightArray  = (int) Math.sqrt(matrixGrayPicture.length);
-        int [][]newMatrix2Dgray = new int[widthheightArray][widthheightArray];
-
-        for(int a=0; a<newMatrix2Dgray.length; a++){
-            for (int b=0; b<newMatrix2Dgray[a].length; b++){
-
-                newMatrix2Dgray[a][b]=matrixGrayPicture[a];
-
-            }
-        }
-
-
-        int [][] resultLBP2D = LBP.resultLBP(newMatrix2Dgray,widthheightArray,widthheightArray);
-
-        int widthResultd2D=resultLBP2D.length;
-        int heightResult2d=resultLBP2D[0].length;
-        int length1D = widthResultd2D*heightResult2d;
-
-        int []resultLBP1D = new int [length1D];
-
-        for (int f=0; f<widthResultd2D; f++){
-            int [] row = resultLBP2D[f];
-            for(int g=0; g<row.length; g++){
-                int matrix= resultLBP2D[f][g];
-                resultLBP1D[f*row.length+g]=matrix;
-            }
-        }
-
-        float[] newMatrikLBP = new float[width*height];
-
-        for (int x=0; x<newMatrikLBP.length; x++ ){
-            newMatrikLBP[x]=resultLBP1D[x];
-        }
-
-        Canvas canvas = new Canvas(btGray);
-        Paint paint = new Paint();
-        ColorMatrixColorFilter filter=new ColorMatrixColorFilter(newMatrikLBP);
-        paint.setColorFilter(filter);
-        canvas.drawBitmap(newLbp,0,0,paint);
-
         setBitmap(newLbp);
-
-
-        try {
-            id.saveFileToSDCard("LogDificam.txt", "LBP"+" matrix  25  = "+newMatrikLBP[1]);
-            id.saveFileToSDCard("LogDificam.txt", "LBP"+" Panjang matrix LBP"+newMatrikLBP.length);
-           } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         return newLbp;
     }
+
+    public int [] setArray(int [] newArray){
+        arrayNew = newArray;
+        return arrayNew;
+    }
+
+
 }

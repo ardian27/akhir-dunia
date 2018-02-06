@@ -65,7 +65,9 @@
         <activity android:name=".AddPengguna" />
         <activity android:name=".DetailPengguna" />
         <activity android:name=".GetPictActivity" />
+        <activity android:name=".SimpleGetPictActivity" />
         <activity android:name=".ConvertPictureActivity"></activity>
+        <activity android:name=".SimpleConvertPictureActivity"></activity>
     </application>
 
 </manifest>
