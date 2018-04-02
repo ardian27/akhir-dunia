@@ -163,9 +163,9 @@ public class GetPictActivity extends AppCompatActivity {
         try {
             String namePict = "dificam" + Calendar.getInstance().getTimeInMillis() + ".jpg";
             File f = new File(wallpaperDirectory, namePict);
-/*
+
             ImageData x = new ImageData();
-            x.setImage(namePict);
+        /*    x.setImage(namePict);
        // setImage = namePict;
             String imagePath=""+IMAGE_DIRECTORY+"/"+namePict;
             Bitmap bmm = BitmapFactory.decodeFile(imagePath);

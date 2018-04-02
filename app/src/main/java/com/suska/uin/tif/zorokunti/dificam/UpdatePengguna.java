@@ -27,8 +27,8 @@ public class UpdatePengguna extends AppCompatActivity {
         alamat = (EditText) findViewById(R.id.et_updateAlamat);
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM tbl_pengguna WHERE nama = '" +
-                getIntent().getStringExtra("nama") + "'",null);
+        cursor = db.rawQuery("SELECT * FROM tbl_pengguna WHERE no = '" +
+                getIntent().getStringExtra("no") + "'",null);
         cursor.moveToFirst();
         if (cursor.getCount()>0)
         {

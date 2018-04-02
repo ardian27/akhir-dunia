@@ -27,11 +27,12 @@ import java.util.Calendar;
 
 public class SimpleGetPictActivity extends AppCompatActivity {
 
-    public Button btn ,next;
+    public Button btn ,next, pengguna;
     public ImageView imageview;
     public EditText width, height , url;
     public static final String IMAGE_DIRECTORY = "/dificam";
     public int GALLERY = 1, CAMERA = 2, widthAwal, heightAwal;
+    int nopengguna;
 
 
 
@@ -41,13 +42,12 @@ public class SimpleGetPictActivity extends AppCompatActivity {
         setContentView(R.layout.simple_activity_get_pict);
 
 
-
         btn = (Button) findViewById(R.id.btn);
         next = (Button) findViewById(R.id.btn_LPel1);
         imageview = (ImageView) findViewById(R.id.iv);
         width = (EditText) findViewById(R.id.et_width);
         height = (EditText) findViewById(R.id.et_height);
-        url = (EditText)findViewById(R.id.et_urlPict);
+        url = (EditText)findViewById(R.id.et_urlPictsimple);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +62,7 @@ public class SimpleGetPictActivity extends AppCompatActivity {
                     String urlPicture = url.getText().toString();
                     Intent next = new Intent(SimpleGetPictActivity.this , SimpleConvertPictureActivity.class);
                     next.putExtra("url" ,urlPicture );
+                    next.putExtra("nopengguna",nopengguna);
                     startActivity(next);
                 }
                 catch (Exception e){
@@ -95,6 +96,7 @@ public class SimpleGetPictActivity extends AppCompatActivity {
         pictureDialog.show();
     }
 
+
     public void choosePhotoFromGallary() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -102,7 +104,7 @@ public class SimpleGetPictActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, GALLERY);
     }
 
-    private void takePhotoFromCamera() {
+    public void takePhotoFromCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAMERA);
     }
@@ -149,6 +151,8 @@ public class SimpleGetPictActivity extends AppCompatActivity {
 
         }
     }
+
+
 
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();

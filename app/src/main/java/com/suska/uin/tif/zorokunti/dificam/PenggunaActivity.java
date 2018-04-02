@@ -17,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class PenggunaActivity extends AppCompatActivity {
-    String[] daftar;
+    String[] daftar,no;
     ListView ListView01;
     Menu menu;
     protected Cursor cursor;
@@ -48,10 +48,12 @@ public class PenggunaActivity extends AppCompatActivity {
         SQLiteDatabase db = dbcenter.getReadableDatabase();
         cursor = db.rawQuery("SELECT * FROM tbl_pengguna",null);
         daftar = new String[cursor.getCount()];
+        no = new String[cursor.getCount()];
         cursor.moveToFirst();
         for (int cc=0; cc < cursor.getCount(); cc++){
             cursor.moveToPosition(cc);
             daftar[cc] = cursor.getString(1).toString();
+            no[cc] = cursor.getString(0).toString();
         }
         ListView01 = (ListView)findViewById(R.id.listView1);
         ListView01.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, daftar));
@@ -59,8 +61,9 @@ public class PenggunaActivity extends AppCompatActivity {
         ListView01.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
-            public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3) {
-                final String selection = daftar[arg2]; //.getItemAtPosition(arg2).toString();
+            public void onItemClick(AdapterView arg0, View arg1, int args2, long arg3) {
+                final String selection = daftar[args2]; //.getItemAtPosition(arg2).toString();
+                final String selectionNo = no[args2]; //.getItemAtPosition(arg2).toString();
                 final CharSequence[] dialogitem = {"Lihat Pengguna", "Update Pengguna", "Hapus Pengguna"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(PenggunaActivity.this);
                 builder.setTitle("Pilihan");
@@ -69,18 +72,17 @@ public class PenggunaActivity extends AppCompatActivity {
                         switch(item){
                             case 0 :
                                 Intent i = new Intent(getApplicationContext(), DetailPengguna.class);
-                                i.putExtra("nama", selection);
+                                i.putExtra("no", selectionNo);
                                 startActivity(i);
                                 break;
                             case 1 :
                                 Intent a= new Intent(getApplicationContext(),UpdatePengguna.class);
-                                a.putExtra("nama",selection);
+                                a.putExtra("no",selectionNo);
                                 startActivity(a);
-
                                 break;
                             case 2 :
                                 SQLiteDatabase db = dbcenter.getWritableDatabase();
-                                db.execSQL("delete from tbl_pengguna where nama = '"+selection+"'");
+                                db.execSQL("delete from tbl_pengguna where no = '"+selectionNo+"'");
                                 RefreshList();
                                 break;
                         }

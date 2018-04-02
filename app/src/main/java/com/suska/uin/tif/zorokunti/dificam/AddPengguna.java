@@ -38,8 +38,7 @@ public class AddPengguna extends AppCompatActivity {
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-                db.execSQL("insert into tbl_pengguna(no, nama, tgl, jk, alamat) values('" +
-                        id.getText().toString() + "','" +
+                db.execSQL("insert into tbl_pengguna(no, nama, tgl, jk, alamat) values(NULL,'" +
                         nama.getText().toString() + "','" +
                         tgl_lahir.getText().toString() + "','" +
                         jk.getText().toString() + "','" +

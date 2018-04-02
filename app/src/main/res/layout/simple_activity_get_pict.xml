@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <Button
+        android:text="Pilih Gambar"
+        android:id="@+id/btn"
+        android:width="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Select or Capture Image" />
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
 
     <ImageView
         android:id="@+id/iv"
@@ -36,6 +38,7 @@
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />
         </TableRow>
+
         <TableRow>
             <TextView
                 android:text="Height "/>
@@ -50,7 +53,7 @@
             <TextView
                 android:text=": "/>
             <EditText
-                android:id="@+id/et_urlPict"/>
+                android:id="@+id/et_urlPictsimple"/>
         </TableRow>
         <TableRow
             android:layout_gravity="center"

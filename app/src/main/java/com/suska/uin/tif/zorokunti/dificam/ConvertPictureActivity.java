@@ -1,6 +1,9 @@
 package com.suska.uin.tif.zorokunti.dificam;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,14 +11,17 @@ import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -33,7 +39,13 @@ public class ConvertPictureActivity extends AppCompatActivity {
     ProgressBar progressBar;
     public int treshold;
     int [] arrayNew;
+    String [] daftar, no;
+    Menu menu;
+    protected Cursor cursor;
+    DataHelper dbcenter;
+    int nopengguna;
 
+    double mean,variance,skewness,kurtosis,entrophy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +73,7 @@ public class ConvertPictureActivity extends AppCompatActivity {
         Bitmap bt = BitmapFactory.decodeFile(uri);
         canvasKosong.setImageBitmap(bt);
         setBitmap(bt);
+        dbcenter = new DataHelper(this);
 
 
 
@@ -149,6 +162,7 @@ public class ConvertPictureActivity extends AppCompatActivity {
                canvasKosong.setImageBitmap(newB);
 
 
+
             }
         });
 
@@ -170,30 +184,64 @@ public class ConvertPictureActivity extends AppCompatActivity {
 
                 int ni[] = ah.intensitasKeabuan(matrixResultLBP);
                 double hi[] = ah.nilaiHistogram(ni);
-                double mean  = ah.nilaiMean(hi);
-                double variance = ah.nilaiVariance(ah.nilaiHistogram(ni),mean);
-                double skewness = ah.nilaiSkewness(ah.nilaiHistogram(ni),mean,variance);
-                double kurtosis = ah.nilaiKurtosis(ah.nilaiHistogram(ni),mean,variance);
-                double entrophy = ah.nilaiEntrophy(ah.nilaiHistogram(ni));
+                double means  = ah.nilaiMean(hi);
+                double variances = ah.nilaiVariance(ah.nilaiHistogram(ni),means);
+                double skewnesss = ah.nilaiSkewness(ah.nilaiHistogram(ni),mean,variances);
+                double kurtosiss = ah.nilaiKurtosis(ah.nilaiHistogram(ni),mean,variances);
+                double entrophys = ah.nilaiEntrophy(ah.nilaiHistogram(ni));
 
 
-                tv_mean.setText(":"+mean);
-                tv_variance.setText(":"+variance);
-                tv_skewness.setText(":"+skewness);
-                tv_kurtosis.setText(":"+kurtosis);
-                tv_entrophy.setText(":"+entrophy);
+                tv_mean.setText(":"+means);
+                tv_variance.setText(":"+variances);
+                tv_skewness.setText(":"+skewnesss);
+                tv_kurtosis.setText(":"+kurtosiss);
+                tv_entrophy.setText(":"+entrophys);
                 //int x = (byte) newBitmap.getPixel(800,800);
                 //teksbutton.setText("Mean = "+mean+" "+"Variance = "+variance+""+"Skewness = "+skewness+" "+"Kurtosis "+kurtosis+" "+"Entrophy = "+entrophy );
                 //teksbutton.setText("Nilai matrix 9 = "+dd);
+
+                setOutput(means,variances,skewnesss,kurtosiss,entrophys);
+
+                try{
+
+                    id.saveFileToSDCardNoSpace("LogDificam.txt","Nilai Mean "+df.format(mean));
+                    id.saveFileToSDCardNoSpace("LogDificam.txt","Nilai Variance "+df.format(variance));
+                    id.saveFileToSDCardNoSpace("LogDificam.txt","Nilai Skewness "+df.format(skewness));
+                    id.saveFileToSDCardNoSpace("LogDificam.txt","Nilai Kurtosis "+df.format(kurtosis));
+                    id.saveFileToSDCardNoSpace("LogDificam.txt","Nilai Entrophy "+df.format(entrophy));
+                    id.saveFileToSDCardNoSpace("LogDificam.txt","ID Pengguna "+nopengguna);
+
+                    id.saveFileToSDCardNoSpace("DataPelatihan.txt",""+df.format(mean));
+                    id.saveFileToSDCardNoSpace("DataPelatihan.txt",""+df.format(variance));
+                    id.saveFileToSDCardNoSpace("DataPelatihan.txt",""+df.format(skewness));
+                    id.saveFileToSDCardNoSpace("DataPelatihan.txt",""+df.format(kurtosis));
+                    id.saveFileToSDCardNoSpace("DataPelatihan.txt",""+df.format(entrophy));
+                    id.saveFileToSDCardNoSpace("DataPelatihan.txt",""+nopengguna);
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
             }
         });
 
 
-        bpnn.setOnClickListener(new View.OnClickListener() {
+        pengguna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                try{
+                    Intent next = new Intent(ConvertPictureActivity.this , SimpanLBPActivity.class);
+                    next.putExtra("m" ,mean );
+                    next.putExtra("v" ,variance );
+                    next.putExtra("s" ,skewness );
+                    next.putExtra("k" ,kurtosis );
+                    next.putExtra("e" ,entrophy );
+                    startActivity(next);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getApplication(), "Mohon Lengkapi Proses Pengolahan Gambar",Toast.LENGTH_SHORT);
+                }
 
             }
         });
@@ -312,5 +360,15 @@ public class ConvertPictureActivity extends AppCompatActivity {
         return arrayNew;
     }
 
+
+    public void setOutput(double tmean, double tvariance, double tskewness, double tkurtosis, double tentrophy){
+
+        mean=tmean;
+        variance=tvariance;
+        skewness=tskewness;
+        kurtosis=tkurtosis;
+        entrophy=tentrophy;
+
+    }
 
 }

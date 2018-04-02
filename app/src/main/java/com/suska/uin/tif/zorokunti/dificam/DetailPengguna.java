@@ -30,8 +30,8 @@ public class DetailPengguna extends AppCompatActivity  {
         text4 = (TextView) findViewById(R.id.textView4);
         text5 = (TextView) findViewById(R.id.textView5);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM tbl_pengguna WHERE nama = '" +
-                getIntent().getStringExtra("nama") + "'",null);
+        cursor = db.rawQuery("SELECT * FROM tbl_pengguna WHERE no = '" +
+                getIntent().getStringExtra("no") + "'",null);
         cursor.moveToFirst();
         if (cursor.getCount()>0)
         {

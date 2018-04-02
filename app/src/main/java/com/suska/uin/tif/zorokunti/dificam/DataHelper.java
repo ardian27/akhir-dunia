@@ -20,12 +20,20 @@ public class DataHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String pelatihan = "create table tbl_pelatihan(id integer primary key, " +
+                "idpengguna text null, mean text null, variance text null, skewness text null, " +
+                "kurtosis text null, entrophy text null);";
+        Log.d("Data", "onCreate: " + pelatihan);
+        db.execSQL(pelatihan);
+
+
         // TODO Auto-generated method stub
-        String sql = "create table tbl_pengguna(no integer primary key, nama text null, tgl text null, jk text null, alamat text null);";
-        Log.d("Data", "onCreate: " + sql);
-        db.execSQL(sql);
-        sql = "INSERT INTO tbl_pengguna (no, nama, tgl, jk, alamat) VALUES ('1', 'Darsiwan', '1996-07-12', 'Laki-laki','Indramayu');";
-        db.execSQL(sql);
+        String pengguna = "create table tbl_pengguna(no integer primary key, " +
+                "nama text null, tgl text null, jk text null, alamat text null);";
+        Log.d("Data", "onCreate: " + pengguna);
+        db.execSQL(pengguna);
+
+
     }
     @Override
     public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {

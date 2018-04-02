@@ -1,6 +1,7 @@
 package com.suska.uin.tif.zorokunti.dificam;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,10 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    DataHelper dbcenter;
+    MainActivity ma;
+    Button resetdb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +34,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent c = new Intent(MainActivity.this,PenggunaActivity.class);
+                startActivity(c);
             }
         });
 
@@ -41,6 +47,25 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        resetdb = (Button)findViewById(R.id.resetdb);
+
+        resetdb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            resetDB();
+            }
+        });
+    }
+
+    public void resetDB(){
+        ma = this;
+
+        dbcenter = new DataHelper(this);
+        SQLiteDatabase db = dbcenter.getWritableDatabase();
+        db.execSQL("delete  from tbl_pelatihan");
+        Toast.makeText(getApplication(), "Data Pelatihan Telah Dihapus",Toast.LENGTH_SHORT);
     }
 
     @Override

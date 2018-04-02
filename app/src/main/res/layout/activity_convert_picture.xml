@@ -21,7 +21,16 @@
         android:layout_marginTop="20dp"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher" />
+    <ListView
+        android:id="@+id/lv_pilih_pengguna1"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content">
 
+    </ListView>
 
 
     <TableLayout
