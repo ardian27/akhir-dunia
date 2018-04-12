@@ -229,8 +229,10 @@ public class ConvertPictureActivity extends AppCompatActivity {
         pengguna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 try{
-                    Intent next = new Intent(ConvertPictureActivity.this , SimpanLBPActivity.class);
+                    Intent next = new Intent(getApplicationContext() , SimpanLBPActivity.class);
                     next.putExtra("m" ,mean );
                     next.putExtra("v" ,variance );
                     next.putExtra("s" ,skewness );

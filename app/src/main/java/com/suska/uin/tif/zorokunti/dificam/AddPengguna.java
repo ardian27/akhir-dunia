@@ -25,7 +25,6 @@ public class AddPengguna extends AppCompatActivity {
         setContentView(R.layout.activity_add_pengguna);
 
         dbHelper = new DataHelper(this);
-        id = (EditText) findViewById(R.id.et_id);
         nama = (EditText) findViewById(R.id.et_nama);
         tgl_lahir = (EditText) findViewById(R.id.et_tgl_lahir);
         jk = (EditText) findViewById(R.id.et_jk);

@@ -17,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class SimpanLBPActivity extends AppCompatActivity {
     String[] daftar,no;
     ListView ListView01;
@@ -24,6 +26,9 @@ public class SimpanLBPActivity extends AppCompatActivity {
     protected Cursor cursor;
     DataHelper dbcenter;
     SimpanLBPActivity ma;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class SimpanLBPActivity extends AppCompatActivity {
             daftar[cc] = cursor.getString(1).toString();
             no[cc] = cursor.getString(0).toString();
         }
+
         ListView01 = (ListView)findViewById(R.id.lv_data_pengguna222);
         ListView01.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, daftar));
         ListView01.setSelected(true);
@@ -62,12 +68,17 @@ public class SimpanLBPActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int item) {
                         switch(item){
                             case 0 :
+
+                                DecimalFormat df= new DecimalFormat("#.####");
+
                                 Intent x = getIntent();
-                                String m = x.getStringExtra("m");
-                                String v = x.getStringExtra("v");
-                                String s = x.getStringExtra("s");
-                                String k = x.getStringExtra("k");
-                                String  e= x.getStringExtra("e");
+                                double m = x.getDoubleExtra("m",0);
+                                double v = x.getDoubleExtra("v",0);
+                                double s = x.getDoubleExtra("s",0);
+                                double k = x.getDoubleExtra("k",0);
+                                double  e= x.getDoubleExtra("e",0);
+
+
                                 SQLiteDatabase db = dbcenter.getWritableDatabase();
                                 db.execSQL("insert into tbl_pelatihan (id,idpengguna,mean,variance,skewness,kurtosis,entrophy)values" +
                                         "(NULL," +
@@ -78,7 +89,7 @@ public class SimpanLBPActivity extends AppCompatActivity {
                                         ","+k+
                                         ","+e+")");
                                 Toast.makeText(getApplicationContext(), "Berhasil Menyimpan Data Pelatihan", Toast.LENGTH_LONG).show();
-                                Intent d = new Intent(SimpanLBPActivity.this , PelatihanActivity.class);
+                                Intent d = new Intent(SimpanLBPActivity.this , MainActivity.class);
                                 startActivity(d);
                                 break;
                             case 1 :
@@ -91,6 +102,4 @@ public class SimpanLBPActivity extends AppCompatActivity {
             }});
         ((ArrayAdapter)ListView01.getAdapter()).notifyDataSetInvalidated();
     }
-
-
 }

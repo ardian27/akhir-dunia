@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="FingerCam"
+            android:textColor="@android:color/black"
             android:textSize="28dp"
             android:textStyle="bold" />
 
@@ -29,88 +29,98 @@
             android:layout_height="match_parent">
 
 
-
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="20dp"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="20dp">
 
                 <Button
 
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/finishscanner" />
+                    android:background="@drawable/finishscanner"
+                    android:id="@+id/btn_menu_scanner"/>
 
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/finishpengguna" />
+                    android:background="@drawable/finishpengguna"
+                    android:id="@+id/btn_menu_pengguna"/>
 
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/finishtraining" />
+                    android:background="@drawable/finishtraining"
+                    android:id="@+id/btn_menu_training"/>
 
             </TableRow>
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="10dp">
 
                 <Button
                     android:layout_width="100dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_height="100dp"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/finishtesting"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:id="@+id/btn_menu_testing"/>
 
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/finishlog" />
+                    android:background="@drawable/finishlog"
+                    android:id="@+id/btn_menu_log"/>
 
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/finishbpnn" />
+                    android:background="@drawable/finishbpnn"
+                    android:id="@+id/btn_menu_bpnn"/>
 
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="10dp">
 
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/finishstatistika"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:id="@+id/btn_menu_statistika"/>
 
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/finishlbp" />
+                    android:background="@drawable/finishlbp"
+                    android:id="@+id/btn_menu_lbp"/>
 
                 <Button
-                    android:id="@+id/resetdb"
+                    android:id="@+id/btn_menu_reset"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/finishreset" />
+                    android:background="@drawable/finishreset"
+                    />
+
 
             </TableRow>
 

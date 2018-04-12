@@ -21,8 +21,8 @@ public class DataHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String pelatihan = "create table tbl_pelatihan(id integer primary key, " +
-                "idpengguna text null, mean text null, variance text null, skewness text null, " +
-                "kurtosis text null, entrophy text null);";
+                "idpengguna integer, mean double null, variance double null, skewness double null, " +
+                "kurtosis double null, entrophy double null);";
         Log.d("Data", "onCreate: " + pelatihan);
         db.execSQL(pelatihan);
 
@@ -33,8 +33,10 @@ public class DataHelper extends SQLiteOpenHelper {
         Log.d("Data", "onCreate: " + pengguna);
         db.execSQL(pengguna);
 
-
     }
+
+
+
     @Override
     public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
         // TODO Auto-generated method stub

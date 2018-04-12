@@ -8,19 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TableRow>
-                <TextView
-                    android:text="No. Identitas "/>
-
-                <EditText
-                    android:hint="ktp / sim / kartu pelajar"
-                    android:id="@+id/et_id"/>
-            </TableRow>
+            
             <TableRow>
                 <TextView
                     android:text="Nama Lengkap"/>

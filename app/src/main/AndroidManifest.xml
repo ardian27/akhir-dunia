@@ -70,7 +70,8 @@
         <activity android:name=".ConvertPictureActivity" />
         <activity android:name=".SimpleConvertPictureActivity" />
         <activity android:name=".DaftarPengguna" />
-        <activity android:name=".SimpanLBPActivity"></activity>
+        <activity android:name=".SimpanLBPActivity" />
+        <activity android:name=".UpdateDataServer"></activity>
     </application>
 
 </manifest>
