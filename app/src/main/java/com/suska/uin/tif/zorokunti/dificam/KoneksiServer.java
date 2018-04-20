@@ -13,6 +13,8 @@ import java.net.URLConnection;
 public class KoneksiServer {
 
     public  String call(String url) {
+
+
         int BUFFER_SIZE = 2000;
         InputStream in = null;
         try {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,14 +17,20 @@ public class UpdateDataServer extends AppCompatActivity {
 
     DataHelper dbcenter;
 
-    protected Cursor cursor;
+    protected Cursor cursor,cursor_data;
     ActionServer as = new ActionServer();
     String[] daftar,no,id_pengguna,nama,tgl_lahir,jk,alamat;
+    String[] id,idp,mean,variance,skewness,kurtosis,entrophy;
     JSONArray arrayData;
     UpdateDataServer upd;
     private ListView ListView01;
     Button btnUpdate;
     TextView teks;
+    EditText namaa;
+
+    private static final String DB_URL = "jdbc:mysql://192.168.43.42/dificam";
+    private static final String USER = "root";
+    private static final String PASS = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +39,21 @@ public class UpdateDataServer extends AppCompatActivity {
 
         upd = this;
         dbcenter = new DataHelper(this);
-        UpdateDataLV();
+
 
 
         btnUpdate = (Button)findViewById(R.id.btn_update_server);
         teks = (TextView)findViewById(R.id.txt_updt);
+        namaa = (EditText)findViewById(R.id.et_namaKirim);
 
+        UpdateDataLV();
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                FunctionServer fs = new FunctionServer();
-                teks.setText(fs.tampilBiodata());
 
+                //updateServerPengguna();
+                updateServerDataCitraStatistika();
             }
         });
     }
@@ -77,21 +86,61 @@ public class UpdateDataServer extends AppCompatActivity {
 
 
 
+
         }
+
+
+        SQLiteDatabase dbc = dbcenter.getReadableDatabase();
+        cursor_data = dbc.rawQuery("SELECT * FROM tbl_pelatihan",null);
+        id = new String[cursor_data.getCount()];
+        idp= new String[cursor_data.getCount()];
+        mean= new String[cursor_data.getCount()];
+        variance = new String[cursor_data.getCount()];
+        skewness= new String[cursor_data.getCount()];
+        kurtosis = new String[cursor_data.getCount()];
+        entrophy = new String[cursor_data.getCount()];
+
+        cursor_data.moveToFirst();
+        for (int cc=0; cc < cursor_data.getCount(); cc++) {
+            cursor_data.moveToPosition(cc);
+
+            id[cc] = cursor_data.getString(0).toString();
+            idp[cc] = cursor_data.getString(1).toString();
+            mean[cc] = cursor_data.getString(2).toString();
+            variance[cc] = cursor_data.getString(3).toString();
+            skewness[cc] = cursor_data.getString(4).toString();
+            kurtosis[cc] = cursor_data.getString(5).toString();
+            entrophy[cc] = cursor_data.getString(6).toString();
+
+        }
+        //String method = "reload_pengguna";
+        //BackgroundTask backgroundTask = new BackgroundTask(this);
+        //backgroundTask.execute(method,nama[1],nama[1],nama[1],nama[1],nama[1]);
+
         ListView01 = (ListView)findViewById(R.id.lv_server);
         ListView01.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, daftar));
         ListView01.setSelected(false);
-
         ((ArrayAdapter)ListView01.getAdapter()).notifyDataSetInvalidated();
 
-
     }
 
-    public void updateServer(){
+    public void updateServerPengguna(){
 
-        FunctionServer fc = new FunctionServer();
-        fc.insertPengguna("1000","1000","1000","1000","1000");
+        for (int d=0; d<no.length; d++){
+            String method = "reload_pengguna";
+            BackgroundTask backgroundTask = new BackgroundTask(this);
+            backgroundTask.execute(method,id_pengguna[d],nama[d],tgl_lahir[d],jk[d],alamat[d]);
+        }
+    }
+
+    public void updateServerDataCitraStatistika(){
 
 
+        for (int d=0; d<id.length; d++){
+            String method = "reload_data_citra";
+            BackgroundTask backgroundTask = new BackgroundTask(this);
+            backgroundTask.execute(method,id[d],idp[d],mean[d],variance[d],skewness[d],kurtosis[d],entrophy[d]);
+        }
     }
 }
+

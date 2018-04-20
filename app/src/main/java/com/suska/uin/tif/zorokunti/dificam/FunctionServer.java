@@ -6,7 +6,7 @@ package com.suska.uin.tif.zorokunti.dificam;
 
 public class FunctionServer extends KoneksiServer {
 
-    String URL = "http://172.16.129.51./dificam/server.php";
+    String URL = "http://172.16.129.51/dificam/server.php";
     String url = "";
     String response = "";
 

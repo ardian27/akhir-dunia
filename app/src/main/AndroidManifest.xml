@@ -72,6 +72,8 @@
         <activity android:name=".DaftarPengguna" />
         <activity android:name=".SimpanLBPActivity" />
         <activity android:name=".UpdateDataServer"></activity>
+        <activity android:name=".Register"></activity>
+        <activity android:name=".ma"></activity>
     </application>
 
 </manifest>
