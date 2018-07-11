@@ -30,12 +30,12 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(ctx).create();
-        alertDialog.setTitle("Login Information....");
+        alertDialog.setTitle("Sukses Update Server....");
     }
     @Override
     protected String doInBackground(String... params) {
-        String url_data = "http://172.16.129.148/dificam/server-data.php";
-        String url_pengguna = "http://172.16.129.148/dificam/server-pengguna.php";
+        String url_data = "http://192.168.43.42/dificam/server-data.php";
+        String url_pengguna = "http://192.168.43.42/dificam/server-pengguna.php";
         String method = params[0];
         if (method.equals("reload_data_citra")) {
 
@@ -64,18 +64,13 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-                String response = "";
-                String line = "";
-                while ((line = bufferedReader.readLine())!=null)
-                {
-                    response+= line;
-                }
-                bufferedReader.close();
-                inputStream.close();
+
+                OS.close();
+                InputStream IS = httpURLConnection.getInputStream();
+                IS.close();
+                // httpURLConnection.connect();
                 httpURLConnection.disconnect();
-                return response;
+                return "Send Data Success...";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

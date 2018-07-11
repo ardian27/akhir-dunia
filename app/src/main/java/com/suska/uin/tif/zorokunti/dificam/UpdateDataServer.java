@@ -1,5 +1,6 @@
 package com.suska.uin.tif.zorokunti.dificam;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -18,7 +20,7 @@ public class UpdateDataServer extends AppCompatActivity {
     DataHelper dbcenter;
 
     protected Cursor cursor,cursor_data;
-    ActionServer as = new ActionServer();
+    //ActionServer as = new ActionServer();
     String[] daftar,no,id_pengguna,nama,tgl_lahir,jk,alamat;
     String[] id,idp,mean,variance,skewness,kurtosis,entrophy;
     JSONArray arrayData;
@@ -28,9 +30,6 @@ public class UpdateDataServer extends AppCompatActivity {
     TextView teks;
     EditText namaa;
 
-    private static final String DB_URL = "jdbc:mysql://192.168.43.42/dificam";
-    private static final String USER = "root";
-    private static final String PASS = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +51,12 @@ public class UpdateDataServer extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                //updateServerPengguna();
+                updateServerPengguna();
                 updateServerDataCitraStatistika();
+                Intent v = new Intent(UpdateDataServer.this, MainActivity.class);
+                startActivity(v);
+                Toast.makeText(getApplicationContext(), "Server Telah Terupdate", Toast.LENGTH_LONG).show();
+
             }
         });
     }

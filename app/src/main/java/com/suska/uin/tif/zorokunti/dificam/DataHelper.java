@@ -33,6 +33,15 @@ public class DataHelper extends SQLiteOpenHelper {
         Log.d("Data", "onCreate: " + pengguna);
         db.execSQL(pengguna);
 
+        String bobot = "create table tbl_pengguna(v0 double primary key,v1 double null, " +
+                "v3 double null, v4 double null, w double null);";
+        Log.d("Data", "onCreate: " + bobot);
+        db.execSQL(bobot);
+
+        String temp_y = "create table temp_y(y double primary key,t integer null);";
+        Log.d("Data", "onCreate: " + bobot);
+        db.execSQL(bobot);
+
     }
 
 
