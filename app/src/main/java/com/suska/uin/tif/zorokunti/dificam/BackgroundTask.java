@@ -36,6 +36,10 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         String url_data = "http://192.168.43.42/dificam/server-data.php";
         String url_pengguna = "http://192.168.43.42/dificam/server-pengguna.php";
+        String url_bobot  = "http://192.168.43.42/dificam/getDataJson.php";
+
+        String JSON_STRING;
+
         String method = params[0];
         if (method.equals("reload_data_citra")) {
 
@@ -84,9 +88,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             String tgl_lahir = params[3];
             String jk = params[4];
             String alamat = params[5];
-
-
-
             try {
                 URL url = new URL(url_pengguna);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -122,6 +123,16 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
             }
         }
+        else if (method.equals("reload_bobot")){
+
+            String v0 = params[1];
+            String v1 = params[2];
+            String v2 = params[3];
+            String v3 = params[4];
+            String v4 = params[5];
+            String w = params[6];
+
+        }
         return null;
     }
     @Override
@@ -130,14 +141,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     }
     @Override
     protected void onPostExecute(String result) {
-        if(result.equals("Registration Success..."))
-        {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            alertDialog.setMessage(result);
-            alertDialog.show();
-        }
+
     }
 }

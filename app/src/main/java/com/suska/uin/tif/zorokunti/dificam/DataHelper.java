@@ -26,26 +26,44 @@ public class DataHelper extends SQLiteOpenHelper {
         Log.d("Data", "onCreate: " + pelatihan);
         db.execSQL(pelatihan);
 
-
         // TODO Auto-generated method stub
         String pengguna = "create table tbl_pengguna(no integer primary key, " +
                 "nama text null, tgl text null, jk text null, alamat text null);";
         Log.d("Data", "onCreate: " + pengguna);
         db.execSQL(pengguna);
 
-        String bobot = "create table tbl_pengguna(v0 double primary key,v1 double null, " +
+
+        String bobot = "create table bobot(v0 double primary key,v1 double null, " +
                 "v3 double null, v4 double null, w double null);";
+
         Log.d("Data", "onCreate: " + bobot);
         db.execSQL(bobot);
 
         String temp_y = "create table temp_y(y double primary key,t integer null);";
-        Log.d("Data", "onCreate: " + bobot);
-        db.execSQL(bobot);
+        Log.d("Data", "onCreate: " + temp_y);
+        db.execSQL(temp_y);
+
+
+        String f = "create table f(y text primary key);";
+        Log.d("Data", "onCreate: " + f);
+        db.execSQL(temp_y);
 
     }
 
+    public  void createTableBobot(SQLiteDatabase db){
+        try {
 
+            String bobot = "create table bobot(v0 double primary key,v1 double null, " +
+                    "v3 double null, v4 double null, w double null);";
 
+            Log.d("Data", "onCreate: " + bobot);
+            db.execSQL(bobot);
+
+        }catch (Exception e){
+            Log.e("Error Membuat DB" , e.getMessage());
+        }
+
+    }
     @Override
     public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
         // TODO Auto-generated method stub

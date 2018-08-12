@@ -62,7 +62,7 @@ public class SimpleGetPictActivity extends AppCompatActivity {
                     String urlPicture = url.getText().toString();
                     Intent next = new Intent(SimpleGetPictActivity.this , SimpleConvertPictureActivity.class);
                     next.putExtra("url" ,urlPicture );
-                    next.putExtra("nopengguna",nopengguna);
+                    //next.putExtra("nopengguna",nopengguna);
                     startActivity(next);
                 }
                 catch (Exception e){

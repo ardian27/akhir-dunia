@@ -23,7 +23,7 @@ public class UpdateDataServer extends AppCompatActivity {
     //ActionServer as = new ActionServer();
     String[] daftar,no,id_pengguna,nama,tgl_lahir,jk,alamat;
     String[] id,idp,mean,variance,skewness,kurtosis,entrophy;
-    JSONArray arrayData;
+    //JSONArray arrayData;
     UpdateDataServer upd;
     private ListView ListView01;
     Button btnUpdate;
@@ -87,9 +87,6 @@ public class UpdateDataServer extends AppCompatActivity {
             alamat[cc] = cursor.getString(4).toString();
             no[cc] = cursor.getString(0).toString();
 
-
-
-
         }
 
 
@@ -128,7 +125,6 @@ public class UpdateDataServer extends AppCompatActivity {
     }
 
     public void updateServerPengguna(){
-
         for (int d=0; d<no.length; d++){
             String method = "reload_pengguna";
             BackgroundTask backgroundTask = new BackgroundTask(this);
@@ -137,8 +133,6 @@ public class UpdateDataServer extends AppCompatActivity {
     }
 
     public void updateServerDataCitraStatistika(){
-
-
         for (int d=0; d<id.length; d++){
             String method = "reload_data_citra";
             BackgroundTask backgroundTask = new BackgroundTask(this);

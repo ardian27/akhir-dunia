@@ -90,6 +90,8 @@ public class SimpleConvertPictureActivity extends AppCompatActivity {
 
             }
         });
+
+
         proses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

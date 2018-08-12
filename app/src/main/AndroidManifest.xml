@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -66,12 +67,16 @@
         <activity android:name=".AddPengguna" />
         <activity android:name=".DetailPengguna" />
         <activity android:name=".GetPictActivity" />
+        <activity android:name=".SimpleGetPengujian" />
         <activity android:name=".SimpleGetPictActivity" />
         <activity android:name=".ConvertPictureActivity" />
         <activity android:name=".SimpleConvertPictureActivity" />
+        <activity android:name=".SimpleConvertPengujian" />
         <activity android:name=".DaftarPengguna" />
         <activity android:name=".SimpanLBPActivity" />
-        <activity android:name=".UpdateDataServer"></activity>
+        <activity android:name=".UpdateDataServer" />
+        <activity android:name=".UpdateBobot" />
+        <activity android:name=".NewLastBobot"></activity>
     </application>
 
 </manifest>

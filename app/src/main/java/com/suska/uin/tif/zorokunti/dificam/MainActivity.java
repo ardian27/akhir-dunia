@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -94,7 +93,8 @@ public class MainActivity extends AppCompatActivity
         menutesting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                    Intent pengujian = new Intent(MainActivity.this, PengujianActivity.class);
+                    startActivity(pengujian);
 
             }
         });
@@ -128,8 +128,10 @@ public class MainActivity extends AppCompatActivity
         menureset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent it = new Intent(MainActivity.this, UpdateBobot.class);
+                startActivity(it);
 
-            System.exit(1);
+            //System.exit(1);
             }
         });
     }
@@ -236,4 +238,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
