@@ -15,11 +15,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 
 public class SimpleConvertPengujian extends AppCompatActivity {
@@ -39,19 +43,19 @@ public class SimpleConvertPengujian extends AppCompatActivity {
     protected Cursor cursor;
     DataHelper dbcenter;
     int nopengguna;
-    double mean,variance,skewness,kurtosis,entrophy;
-    double [] bobot;
+    double alfa, mean,variance,skewness,kurtosis,entrophy ;
+    double min_m , max_m;
+    double min_v , max_v;
+    double min_s , max_s;
+    double min_k , max_k;
+    double min_e , max_e;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_activity_convert_pengujian);
-
-
         canvasKosongp = (ImageView)findViewById(R.id.scanvas_kosongp);
         proses = (Button)findViewById(R.id.btn_proses_simplep);
-
-
         //ImageData b = new ImageData();
         Intent x = getIntent();
         String uri = x.getStringExtra("url");
@@ -62,9 +66,6 @@ public class SimpleConvertPengujian extends AppCompatActivity {
         setBitmap(bt);
 
         dbcenter = new DataHelper(this);
-
-
-
         proses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,13 +88,12 @@ public class SimpleConvertPengujian extends AppCompatActivity {
                     int [] matrixResultLBP = arrayNew;
 
                     ImageData id= new ImageData();
+
                     int dd = matrixResultLBP[9];
-
-
 
                     AlgoritmaHistogram ah = new AlgoritmaHistogram();
 
-                    DecimalFormat df= new DecimalFormat("#.####");
+                    DecimalFormat df= new DecimalFormat("#.#####");
 
                     int ni[] = ah.intensitasKeabuan(matrixResultLBP);
                     double hi[] = ah.nilaiHistogram(ni);
@@ -104,10 +104,14 @@ public class SimpleConvertPengujian extends AppCompatActivity {
                     double entrophys = ah.nilaiEntrophy(ah.nilaiHistogram(ni));
 
 
+                    //Log.e("mvske","m="+means+"v="+variances+"s="+skewnesss+"k="+kurtosiss+"e="+entrophys);
+
+
                     setOutput(means,variances,skewnesss,kurtosiss,entrophys);
+                    getMinMax();
+                    pengujian();
 
-                    Log.d("Yeayy", "Dah sampe sini");
-
+                    Log.d("Yeayy", "Selesai");
 
 
 
@@ -115,9 +119,13 @@ public class SimpleConvertPengujian extends AppCompatActivity {
 
                 }
 
+                Intent ma = new Intent(SimpleConvertPengujian.this , MainActivity.class);
+                startActivity(ma);
+
             }
 
         });
+
     }
 
     public double[][] getBobotFromDB() {
@@ -129,6 +137,7 @@ public class SimpleConvertPengujian extends AppCompatActivity {
         try{
 
             cursor.moveToFirst();
+
             double [] v0 = new double[cursor.getCount()];
             double [] v1 = new double[cursor.getCount()];
             double [] v2 = new double[cursor.getCount()];
@@ -138,12 +147,12 @@ public class SimpleConvertPengujian extends AppCompatActivity {
 
             for (int cc=0; cc < cursor.getCount(); cc++){
                 cursor.moveToPosition(cc);
-                v0[cc] = cursor.getDouble(2);
-                v1[cc] = cursor.getDouble(3);
-                v2[cc] = cursor.getDouble(4);
-                v3[cc] = cursor.getDouble(5);
-                v4[cc] = cursor.getDouble(6);
-                w[cc] = cursor.getDouble(7);
+                v0[cc] = cursor.getDouble(1);
+                v1[cc] = cursor.getDouble(2);
+                v2[cc] = cursor.getDouble(3);
+                v3[cc] = cursor.getDouble(4);
+                v4[cc] = cursor.getDouble(5);
+                w[cc] = cursor.getDouble(6);
 
                 dataBobot[cc][0] = v0[cc];
                 dataBobot[cc][1] = v1[cc];
@@ -153,12 +162,103 @@ public class SimpleConvertPengujian extends AppCompatActivity {
                 dataBobot[cc][5] = w[cc];
             }
 
-
+            Log.e("Get Data Bobot","true");
 
         }catch (Exception e){
+            Log.e("Get Data Bobot",e.getMessage());
+
 
         }
         return  dataBobot;
+    }
+
+    public void getMinMax() {
+        SQLiteDatabase db = dbcenter.getReadableDatabase();
+        cursor = db.rawQuery("SELECT * from min_max",null);
+        daftar = new String[cursor.getCount()];
+        double dataMinMax [] = new double[10];
+
+        try{
+                cursor.moveToPosition(0);
+
+                dataMinMax[0] = cursor.getDouble(1);
+                dataMinMax[1] = cursor.getDouble(2);
+                dataMinMax[2] = cursor.getDouble(3);
+                dataMinMax[3] = cursor.getDouble(4);
+                dataMinMax[4] = cursor.getDouble(5);
+                dataMinMax[5] = cursor.getDouble(6);
+                dataMinMax[6] = cursor.getDouble(7);
+                dataMinMax[7] = cursor.getDouble(8);
+                dataMinMax[8] = cursor.getDouble(9);
+                dataMinMax[9] = cursor.getDouble(10);
+
+
+                DecimalFormat df = new DecimalFormat("#.#####");
+/*
+                setMin_m(Double.parseDouble(df.format(dataMinMax[0])));
+                setMax_m(Double.parseDouble(df.format(dataMinMax[1])));
+                setMin_v(Double.parseDouble(df.format(dataMinMax[2])));
+                setMax_v(Double.parseDouble(df.format(dataMinMax[3])));
+                setMin_s(Double.parseDouble(df.format(dataMinMax[4])));
+                setMax_s(Double.parseDouble(df.format(dataMinMax[5])));
+                setMin_k(Double.parseDouble(df.format(dataMinMax[6])));
+                setMax_k(Double.parseDouble(df.format(dataMinMax[7])));
+                setMin_e(Double.parseDouble(df.format(dataMinMax[8])));
+                setMax_e(Double.parseDouble(df.format(dataMinMax[9])));
+*/
+                setMin_m(dataMinMax[0]);
+                setMax_m(dataMinMax[1]);
+                setMin_v(dataMinMax[2]);
+                setMax_v(dataMinMax[3]);
+                setMin_s(dataMinMax[4]);
+                setMax_s(dataMinMax[5]);
+                setMin_k(dataMinMax[6]);
+                setMax_k(dataMinMax[7]);
+                setMin_e(dataMinMax[8]);
+                setMax_e(dataMinMax[9]);
+
+                Log.e("Nilai min x","min_m="+getMin_m());
+
+
+
+
+        }catch (Exception e){
+            Log.e("Gagal get Data min max",e.getMessage());
+
+
+        }
+    }
+
+    public double[][] getCompareUji() {
+        SQLiteDatabase db = dbcenter.getReadableDatabase();
+        cursor = db.rawQuery("SELECT * from temp_y",null);
+        daftar = new String[cursor.getCount()];
+        double dataY [][] = new double[cursor.getCount()][cursor.getCount()];
+
+        try{
+
+            cursor.moveToFirst();
+            double [] y = new double[cursor.getCount()];
+            double [] t = new double[cursor.getCount()];
+
+            for (int cc=0; cc < cursor.getCount(); cc++){
+                cursor.moveToPosition(cc);
+                y[cc] = cursor.getDouble(1);
+                t[cc] = cursor.getDouble(2);
+
+                dataY[cc][0] = y[cc];
+                dataY[cc][1] = t[cc];
+            }
+
+            Log.e("Get Data Y temp","true");
+
+
+
+        }catch (Exception e){
+            Log.e("Get Data Y temp","Gagal");
+
+        }
+        return  dataY;
     }
 
 
@@ -192,7 +292,6 @@ public class SimpleConvertPengujian extends AppCompatActivity {
     public double [] getBias (){
         double bobotDB[][] = getBobotFromDB();
         double[] bias = bobotDB[bobotDB.length - 1];
-
         return bias;
     }
 
@@ -202,8 +301,106 @@ public class SimpleConvertPengujian extends AppCompatActivity {
     }
 
 
-    public Bitmap setBitmap(Bitmap newbitmap){
+    public Double normalisasi(Double input, Double min, Double max) {
 
+        return (input - min) / (max - min);
+    }
+
+
+
+    public double pengujian(){
+
+        Bpnn bpnn = new Bpnn();
+
+        double x1,x2,x3,x4,x5,nx1,nx2,nx3,nx4,nx5;
+
+        x1 = mean;
+        x2 = variance;
+        x3 = skewness;
+        x4 = kurtosis;
+        x5 = entrophy;
+
+        nx1 = normalisasi(x1 , getMin_m(),getMax_m());
+        nx2 = normalisasi(x2 , getMin_v(),getMax_v());
+        nx3 = normalisasi(x3 , getMin_s(),getMax_s());
+        nx4 = normalisasi(x4 , getMin_k(),getMax_k());
+        nx5 = normalisasi(x5 , getMin_e(),getMax_e());
+
+        double [][] xx = new double[1][5];
+        double [][] bobothidden = getBobotHidden();
+        double [] bobotbias = getBias();
+        double [] bobotoutput = getBobotOutput();
+
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j<1; j++) {
+                xx[0][0]=nx1;
+                xx[0][1]=nx2;
+                xx[0][2]=nx3;
+                xx[0][3]=nx4;
+                xx[0][4]=nx5;
+            }
+        }
+
+        double y = bpnn.feedForward(xx, 0, bobothidden, bobotbias, bobotoutput);
+
+       // System.out.println(y);
+
+
+        Log.e("nilai y = ","="+y);
+
+        double [][] compareUji = getCompareUji();
+
+        double start = y;
+
+
+        List<Double> nilaiCompare = new ArrayList<>();
+
+        for (int i = 0; i < compareUji.length; i++) {
+            for (int j = 0; j < compareUji[0].length-1; j++) {
+                nilaiCompare.add(compareUji[i][j]);
+            }
+        }
+
+        Collections.sort(nilaiCompare);
+
+        double nearest = 0;
+
+        for (double i : nilaiCompare)
+        {
+            if (i <= start) {
+                nearest = i;
+            }
+        }
+        //System.out.println(nearest);
+        Log.e("nilai y sidik jari="+nearest,"<===");
+        getUser(nearest);
+        return y;
+    }
+
+    private void getUser(double nearest) {
+        SQLiteDatabase db = dbcenter.getReadableDatabase();
+        String queNearest = "select b.nama from temp_y as a , tbl_pengguna as b where a.y = '"+nearest+"' and a.t=b.no";
+
+        cursor = db.rawQuery(queNearest,null);
+        daftar = new String[cursor.getCount()];
+        double dataY [][] = new double[cursor.getCount()][6];
+
+        try{
+            cursor.moveToFirst();
+            String HasilIdentifikasi = cursor.getString(0);
+
+            Log.e("Identifikasi sidik jari","Sukses");
+            Log.e("Identifikasi sidik jari","Dikenali sebagai"+HasilIdentifikasi);
+
+            Toast.makeText(SimpleConvertPengujian.this , "Data Sidik Jari Dikenali sebagai "+HasilIdentifikasi,Toast.LENGTH_LONG).show();
+
+        }catch (Exception e){
+            Log.e("Identifikasi sidik jari","Gagal");
+
+        }
+    }
+
+    public Bitmap setBitmap(Bitmap newbitmap){
         newBitmap=newbitmap;
         return newBitmap;
     }
@@ -212,6 +409,7 @@ public class SimpleConvertPengujian extends AppCompatActivity {
 
         newBitmap=null;
         return newBitmap;
+
     }
 
     public Bitmap KonversiGrayscale(Bitmap bp){
@@ -323,5 +521,103 @@ public class SimpleConvertPengujian extends AppCompatActivity {
 
     }
 
+    public double getMean() {
+        return mean;
+    }
 
+    public double getVariance() {
+        return variance;
+    }
+
+    public double getSkewness() {
+        return skewness;
+    }
+
+    public double getKurtosis() {
+        return kurtosis;
+    }
+
+    public double getEntrophy() {
+        return entrophy;
+    }
+
+    public double getMin_m() {
+        return min_m;
+    }
+
+    public void setMin_m(double min_m) {
+        this.min_m = min_m;
+    }
+
+    public double getMax_m() {
+        return max_m;
+    }
+
+    public void setMax_m(double max_m) {
+        this.max_m = max_m;
+    }
+
+    public double getMin_v() {
+        return min_v;
+    }
+
+    public void setMin_v(double min_v) {
+        this.min_v = min_v;
+    }
+
+    public double getMax_v() {
+        return max_v;
+    }
+
+    public void setMax_v(double max_v) {
+        this.max_v = max_v;
+    }
+
+    public double getMin_s() {
+        return min_s;
+    }
+
+    public void setMin_s(double min_s) {
+        this.min_s = min_s;
+    }
+
+    public double getMax_s() {
+        return max_s;
+    }
+
+    public void setMax_s(double max_s) {
+        this.max_s = max_s;
+    }
+
+    public double getMin_k() {
+        return min_k;
+    }
+
+    public void setMin_k(double min_k) {
+        this.min_k = min_k;
+    }
+
+    public double getMax_k() {
+        return max_k;
+    }
+
+    public void setMax_k(double max_k) {
+        this.max_k = max_k;
+    }
+
+    public double getMin_e() {
+        return min_e;
+    }
+
+    public void setMin_e(double min_e) {
+        this.min_e = min_e;
+    }
+
+    public double getMax_e() {
+        return max_e;
+    }
+
+    public void setMax_e(double max_e) {
+        this.max_e = max_e;
+    }
 }

@@ -29,14 +29,17 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     }
     @Override
     protected void onPreExecute() {
+
         alertDialog = new AlertDialog.Builder(ctx).create();
         alertDialog.setTitle("Sukses Update Server....");
+
     }
     @Override
     protected String doInBackground(String... params) {
-        String url_data = "http://192.168.43.42/dificam/server-data.php";
-        String url_pengguna = "http://192.168.43.42/dificam/server-pengguna.php";
-        String url_bobot  = "http://192.168.43.42/dificam/getDataJson.php";
+        //String url_data = "http://192.168.43.42/dificam/server-data.php";
+        String url_data = "http://10.0.2.1/dificam/server-data.php";
+        //String url_pengguna = "http://192.168.43.42/dificam/server-pengguna.php";
+        String url_pengguna = "http://10.0.2.1/dificam/server-pengguna.php";
 
         String JSON_STRING;
 

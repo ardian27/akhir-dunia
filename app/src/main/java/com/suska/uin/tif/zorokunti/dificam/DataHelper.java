@@ -44,9 +44,6 @@ public class DataHelper extends SQLiteOpenHelper {
         db.execSQL(temp_y);
 
 
-        String f = "create table f(y text primary key);";
-        Log.d("Data", "onCreate: " + f);
-        db.execSQL(temp_y);
 
     }
 

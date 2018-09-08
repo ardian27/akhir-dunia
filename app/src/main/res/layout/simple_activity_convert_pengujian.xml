@@ -22,7 +22,6 @@
         android:layout_gravity="center"
         android:gravity="center">
 
-
         <TableRow
             android:gravity="center">
 

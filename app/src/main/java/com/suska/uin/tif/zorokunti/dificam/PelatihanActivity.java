@@ -43,8 +43,7 @@ public class PelatihanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pelatihan);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        Pengguna pgn = new Pengguna();
-        JSONArray arrayPengguna;
+         JSONArray arrayPengguna;
 
         basic = (Button)findViewById(R.id.btn_basicTraining);
         simple = (Button)findViewById(R.id.btn_simpleTraining);

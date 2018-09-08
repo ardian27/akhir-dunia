@@ -76,7 +76,6 @@
         <activity android:name=".SimpanLBPActivity" />
         <activity android:name=".UpdateDataServer" />
         <activity android:name=".UpdateBobot" />
-        <activity android:name=".NewLastBobot"></activity>
     </application>
 
 </manifest>

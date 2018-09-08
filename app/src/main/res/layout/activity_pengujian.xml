@@ -19,47 +19,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:weightSum="1">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="?android:attr/fingerprintAuthDrawable"
-            android:layout_weight="0.67" />
-
-        <Space
-            android:layout_width="20px"
-            android:layout_height="20px" />
-
-        <Button
-            android:id="@+id/btn_pengujian"
-            android:layout_width="400px"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="?attr/actionModeSplitBackground"
-            android:text="Uji Data"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
-
-        <ListView
-            android:id="@+id/lv"
-            android:layout_height="200dp"
-            android:layout_above="@+id/button2"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent">
-
-        </ListView>
-
-
-    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

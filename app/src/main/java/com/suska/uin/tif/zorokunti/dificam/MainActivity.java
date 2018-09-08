@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         menutesting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent pengujian = new Intent(MainActivity.this, PengujianActivity.class);
+                    Intent pengujian = new Intent(MainActivity.this, SimpleGetPengujian.class);
                     startActivity(pengujian);
 
             }

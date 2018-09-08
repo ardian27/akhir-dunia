@@ -22,16 +22,6 @@ public class PengujianActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pengujian);
 
-        btn_uji = (Button)findViewById(R.id.btn_pengujian);
-
-        btn_uji.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent b = new Intent(PengujianActivity.this , SimpleGetPengujian.class);
-                startActivity(b);
-            }
-        });
-
     }
 
 
